@@ -32,7 +32,8 @@ func main() {
 	erro := http.ListenAndServe(":8080", nil)
 	//Inicia o servidor HTTP na porta especificada. Ele "escuta" por requisições HTTP.
 	//O primeiro argumento (":8080") define a porta em que o servidor estará rodando (neste caso, 8080).
-	//O segundo argumento (nil) representa o handler padrão. Como estamos usando http.HandleFunc para definir o manipulador da rota, o nil indica que o pacote http deve usar os manipuladores registrados previamente.
+	//O segundo argumento (nil) representa o handler padrão. Como estamos usando http.HandleFunc para definir o manipulador da rota, o nil indica que o pacote net/http deve usar os manipuladores registrados previamente.
+	// O Go usa o multiplexer global padrão(default multiplexer) para gerenciar as rotas, que também é uma instância de ServeMux,
 
 	if erro != nil {
 		fmt.Println("Erro ao iniciar o servidor:", erro)
@@ -41,6 +42,7 @@ func main() {
 }
 
 func BuscaCepHandler(res http.ResponseWriter, req *http.Request) {
+	// Um handler é qualquer função ou objeto que trata uma requisição HTTP e envia uma resposta de volta ao cliente.
 	//res http.ResponseWriter: Representa a resposta HTTP que será enviada ao cliente. Com ele, podemos enviar dados de volta para o navegador que fez a requisição.
 	// Características:
 	// Escrever Respostas: Permite escrever dados de resposta para o cliente, como o corpo da resposta e cabeçalhos HTTP.

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <th>Curso</th>
+            <th>Carga Horária</th>
+        </thead>
+        <tbody>
+            {{ range .}}
+            <!--  O . no template representa o contexto atual passado para o template pelo segundo parâmetro em template.Execute -->
+            <!--  itera sobre esse contexto atual, que pode ser um slice, mapa, ou qualquer coleção que suporte iteração. -->
+            <!-- O range iterará sobre cada item do ListaCursos, permitindo o acesso aos seus campos dentro do bloco range. -->
+            <tr>
+                <td>{{.Nome}}</td>
+                <td>{{.CargaHoraria}}</td>
+                <!-- Dentro do range: . representa o item atual da iteração. -->
+                <!-- No template Go, diferentemente do for, não tem acesso ao índice diretamente. Apenas acessa o valor atual (.) -->
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</body>
+</html>
