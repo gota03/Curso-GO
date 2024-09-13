@@ -1,0 +1,18 @@
+{{template "header.html"}}
+<h1>Cursos</h1>
+    <table>
+        <thead>
+            <th>Curso</th>
+            <th>Carga Horária</th>
+        </thead>
+        <tbody>
+            {{ range .}}
+            <tr>
+                <td>{{.Nome | ToUpper}}</td>
+                <!-- A função ToUpper é aplicada à string Nome, o que significa que o nome do curso será exibido em letras maiúsculas no HTML gerado. -->
+                <td>{{.CargaHoraria}}</td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+{{template "footer.html"}}
