@@ -21,7 +21,9 @@ func explodirBomba(ctx context.Context) {
 		println("Bomba não explodiu")
 		return
 	case <-time.After(time.Second * 7):
+		// After espera que a duração decorra e então envia a hora atual no canal retornado
 		// Cria um canal que será enviado um valor após 7 segundos. Se 7 segundos se passarem antes do contexto ser cancelado, a mensagem "Bomba explodiu" é impressa e a função retorna.
+		
 		println("Bomba explodiu")
 		return
 	}
