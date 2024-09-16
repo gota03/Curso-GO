@@ -1,7 +1,7 @@
 package main
 
 import (
-	"curso-go/Fundacao/Aula18/matematica"
+	"curso-go/1-Fundacao/Aula18/matematica"
 	"fmt"
 
 	"github.com/google/uuid"
