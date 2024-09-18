@@ -58,6 +58,17 @@ func main() {
 		panic(err)
 	}
 	fmt.Printf("ID: %v\nName: %v\nPrice: %.2f", product.ID, product.Name, product.Price)
+	products, err := SelectAllProducts(db)
+	if err != nil {
+		panic(err)
+	}
+	for _, v := range products {
+		fmt.Printf("ID: %v\nName: %v\nPrice: %.2f", v.ID, v.Name, v.Price)
+	}
+	err = DeleteProduct(db, product.ID)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func CreateTable(db *sql.DB) error {
@@ -149,4 +160,44 @@ func SelectProduct(db *sql.DB, id int) (*Product, error) {
 		return nil, err
 	}
 	return &p, nil
+}
+
+func SelectAllProducts(db *sql.DB) ([]Product, error) {
+	rows, erro := db.Query("SELECT * from products")
+	// Query retorna um valor do tipo *sql.Rows, que contém o conjunto de linhas resultantes da consulta.
+	if erro != nil {
+		return nil, erro
+	}
+	defer rows.Close()
+	var products []Product
+	var p Product
+	for rows.Next() {
+		// Next é usado para iterar sobre os resultados de uma consulta SQL
+		// retorna true se houver mais linhas.
+		// Se não houver mais linhas, ele retorna false, encerrando o loop.
+
+		err := rows.Scan(&p.ID, &p.Name, &p.Price)
+		// Scan lê os valores das colunas da linha atual e os armazena nas variáveis passadas como argumento. Cada variável corresponde a uma coluna no resultado da consulta SQL.
+		// A ordem dos argumentos passados para Scan() deve corresponder à ordem das colunas retornadas pela consulta SQL
+		// Realiza a conversão automática dos tipos de dados do banco de dados para os tipos Go correspondentes, desde que sejam compatíveis.
+
+		if err != nil {
+			panic(err)
+		}
+		products = append(products, p)
+	}
+	return products, nil
+}
+
+func DeleteProduct(db *sql.DB, id int) error {
+	stmt, err := db.Prepare("DELETE * FROM products WHERE id = ?;")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(id)
+	if err != nil {
+		return err
+	}
+	return nil
 }
